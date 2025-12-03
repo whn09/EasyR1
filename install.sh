@@ -9,6 +9,9 @@ pip install -e .
 
 # pip install flash-attn --no-build-isolation
 
+python examples/convert_data.py examples/train_data.json examples/train_data_converted.json
+python examples/convert_data.py examples/test_data.json examples/test_data_converted.json
+
 # wandb offline
 # wandb login
 
