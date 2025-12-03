@@ -15,3 +15,30 @@ pip install -e .
 bash examples/qwen3_vl_4b_oil_gauge_grpo.sh
 
 python3 scripts/model_merger.py --local_dir checkpoints/easy_r1/qwen3_vl_4b_oil_gauge_grpo/global_step_120/actor
+
+sudo chown -R ubuntu:ubuntu /home/ubuntu/EasyR1/checkpoints/
+
+mkdir -p /home/ubuntu/EasyR1/checkpoints/easy_r1/qwen3_vl_4b_oil_gauge_grpo/global_step_120/actor/eval/
+
+llamafactory-cli train \
+    --stage sft \
+    --model_name_or_path /home/ubuntu/EasyR1/checkpoints/easy_r1/qwen3_vl_4b_oil_gauge_grpo/global_step_120/actor/huggingface \
+    --preprocessing_num_workers 16 \
+    --finetuning_type lora \
+    --quantization_method bnb \
+    --template qwen3_vl_nothink \
+    --flash_attn auto \
+    --dataset_dir data \
+    --eval_dataset oil_gauge_test \
+    --cutoff_len 1024 \
+    --max_samples 100000 \
+    --per_device_eval_batch_size 16 \
+    --predict_with_generate True \
+    --report_to none \
+    --max_new_tokens 512 \
+    --top_p 0.7 \
+    --temperature 0.95 \
+    --output_dir /home/ubuntu/EasyR1/checkpoints/easy_r1/qwen3_vl_4b_oil_gauge_grpo/global_step_120/actor/eval/ \
+    --trust_remote_code True \
+    --ddp_timeout 180000000 \
+    --do_predict True
