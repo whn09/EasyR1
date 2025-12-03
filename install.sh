@@ -1,5 +1,5 @@
 docker pull hiyouga/verl:ngc-th2.8.0-cu12.9-vllm0.11.0
-docker run -it --ipc=host --gpus=all -v /home/ubuntu/EasyR1:/workspace/EasyR1 hiyouga/verl:ngc-th2.8.0-cu12.9-vllm0.11.0
+docker run -it --ipc=host --gpus=all -v /home/ubuntu/EasyR1:/workspace/EasyR1 -v /home/ubuntu/LLaMA-Factory/qwen3_4b_20epochs:/workspace/qwen3_4b_20epochs hiyouga/verl:ngc-th2.8.0-cu12.9-vllm0.11.0
 
 cd EasyR1
 
@@ -9,8 +9,9 @@ pip install -e .
 
 # pip install flash-attn --no-build-isolation
 
-wandb offline
+# wandb offline
+# wandb login
 
 bash examples/qwen3_vl_4b_oil_gauge_grpo.sh
 
-python3 scripts/model_merger.py --local_dir checkpoints/easy_r1/qwen3_vl_4b_oil_gauge_grpo/global_step_1/actor
+python3 scripts/model_merger.py --local_dir checkpoints/easy_r1/qwen3_vl_4b_oil_gauge_grpo/global_step_120/actor
